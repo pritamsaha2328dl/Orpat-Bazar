@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Orpat Bazar Rewards</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://adsgram.ai/js/adsgram.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. Reset & Full Screen Setup --- */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrolling */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* BRAND THEME: Deep Teal Gradient */
+            background: radial-gradient(circle at center, #004d40 0%, #00251a 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- 2. Glass Container --- */
+        .app-container {
+            width: 90%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.05); /* Ultra subtle glass */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 32px;
+            padding: 40px 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2); /* Faint Gold Border */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            
+            /* Animation */
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- 3. Typography & Branding --- */
+        .brand-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: inline-block;
+            /* Gold Gradient Text for Icon */
+            background: linear-gradient(to bottom, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+            animation: spinSlow 10s linear infinite;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            /* GOLD TEXT */
+            color: #FFD700;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+
+        /* --- 4. The Premium Gold Button --- */
+        .btn-gold {
+            position: relative;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            
+            /* Gold Gradient Background */
+            background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            
+            /* Text Styling */
+            color: #00251a; /* Dark Teal Text for Contrast */
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        .btn-gold:active {
+            transform: scale(0.96);
+            filter: brightness(0.9);
+        }
+
+        /* Sparkle Animation on Button */
+        .btn-gold::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: 0.5s;
+        }
+        .btn-gold:hover::after {
+            left: 100%;
+        }
+
+        /* --- 5. Status Text --- */
+        #status {
+            margin-top: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            height: 20px;
+        }
+
+        /* --- Animations --- */
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="brand-icon">⚙️</div>
+
+        <h1>Orpat Bazar</h1>
+        <p>Watch a short sponsor video to<br>unlock <b>+10 Gold Coins</b> instantly.</p>
+        
+        <button id="ad-btn" class="btn-gold" onclick="showAd()">
+            Claim Reward
+        </button>
+
+        <div id="status">Waiting for action...</div>
+    </div>
+
+    <script>
+        // 1. Initialize Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Force Full Screen
+        tg.enableClosingConfirmation(); // Prevents accidental closing
+
+        // 2. Initialize Adsgram with YOUR Block ID
+        const AdController = window.Adsgram.init({ blockId: "20572" }); 
+
+        // 3. Logic
+        function showAd() {
+            const btn = document.getElementById('ad-btn');
+            const status = document.getElementById('status');
+
+            // Loading UI
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+            btn.innerHTML = "Processing...";
+            status.innerText = "Connecting to Ad Server...";
+            status.style.color = "#FFD700"; // Gold
+
+            // Show Ad
+            AdController.show().then((result) => {
+                // SUCCESS
+                status.innerText = "Success! Reward Unlocked.";
+                status.style.color = "#4CAF50"; // Green
+                
+                btn.innerHTML = "✅ COLLECTED";
+                btn.style.background = "#4CAF50";
+                btn.style.color = "white";
+                btn.style.boxShadow = "none";
+
+                // Send data to Bot
+                tg.sendData("AD_WATCHED_SUCCESS"); 
+                
+                // Close automatically
+                setTimeout(() => { tg.close(); }, 1500);
+
+            }).catch((result) => {
+                // ERROR / SKIP
+                status.innerText = "Video Skipped. Try Again.";
+                status.style.color = "#FF5252"; // Red
+                
+                // Reset Button
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                btn.innerHTML = "Claim Reward";
+            });
+        }
+    </script>
+</body>
+</html>
