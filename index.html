@@ -10,201 +10,149 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. Reset & Full Screen Setup --- */
+        /* --- 1. PREMIUM DESIGN SETUP --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Prevents scrolling */
-            font-family: 'Poppins', sans-serif;
-        }
+        body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; }
 
         body {
-            /* BRAND THEME: Deep Teal Gradient */
+            /* Orpat Brand Colors: Deep Teal Gradient */
             background: radial-gradient(circle at center, #004d40 0%, #00251a 100%);
             color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* --- 2. Glass Container --- */
+        /* Glass Card */
         .app-container {
-            width: 90%;
-            max-width: 380px;
-            background: rgba(255, 255, 255, 0.05); /* Ultra subtle glass */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 32px;
-            padding: 40px 24px;
-            text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.2); /* Faint Gold Border */
+            width: 90%; max-width: 380px;
+            background: rgba(255, 255, 255, 0.05); /* Crystal Glass */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 32px; padding: 40px 24px; text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2); /* Gold Border */
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             
-            /* Animation */
-            opacity: 0;
-            transform: scale(0.9);
-            animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            /* Entrance Animation */
+            opacity: 0; transform: scale(0.9);
+            animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* --- 3. Typography & Branding --- */
+        /* Spinning Gear Icon */
         .brand-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-            display: inline-block;
-            /* Gold Gradient Text for Icon */
+            font-size: 50px; margin-bottom: 15px; display: inline-block;
             background: linear-gradient(to bottom, #FFD700, #B8860B);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: spinSlow 10s linear infinite;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            /* GOLD TEXT */
-            color: #FFD700;
-            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
-            margin-bottom: 8px;
-        }
+        h1 { margin: 0; font-size: 28px; font-weight: 800; color: #FFD700; text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
+        p { font-size: 14px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 35px; }
 
-        p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 35px;
-            font-weight: 400;
-        }
-
-        /* --- 4. The Premium Gold Button --- */
+        /* Gold Button */
         .btn-gold {
-            position: relative;
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 18px;
-            cursor: pointer;
-            
-            /* Gold Gradient Background */
+            width: 100%; padding: 18px; border: none; border-radius: 18px; cursor: pointer;
             background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%);
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-            
-            /* Text Styling */
-            color: #00251a; /* Dark Teal Text for Contrast */
-            font-size: 18px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: #00251a; font-size: 18px; font-weight: 800; text-transform: uppercase;
             transition: transform 0.2s, filter 0.2s;
         }
+        .btn-gold:active { transform: scale(0.96); filter: brightness(0.9); }
+        .btn-gold:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(100%); }
 
-        .btn-gold:active {
-            transform: scale(0.96);
-            filter: brightness(0.9);
-        }
+        /* Status Text */
+        #status { margin-top: 25px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); min-height: 20px; transition: color 0.3s; }
 
-        /* Sparkle Animation on Button */
-        .btn-gold::after {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            transition: 0.5s;
-        }
-        .btn-gold:hover::after {
-            left: 100%;
-        }
-
-        /* --- 5. Status Text --- */
-        #status {
-            margin-top: 25px;
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.4);
-            height: 20px;
-        }
-
-        /* --- Animations --- */
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes spinSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        /* Animations */
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <div class="app-container">
         <div class="brand-icon">⚙️</div>
-
         <h1>Orpat Bazar</h1>
-        <p>Watch a short sponsor video to<br>unlock <b>+10 Gold Coins</b> instantly.</p>
+        <p>Watch a short video to unlock<br><b>+10 Gold Coins</b> instantly.</p>
         
-        <button id="ad-btn" class="btn-gold" onclick="showAd()">
+        <button id="ad-btn" class="btn-gold" onclick="runAdLogic()">
             Claim Reward
         </button>
 
-        <div id="status">Waiting for action...</div>
+        <div id="status">Ready</div>
     </div>
 
     <script>
-        // 1. Initialize Telegram WebApp
+        // --- 2. ROBUST LOGIC SETUP ---
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Force Full Screen
-        tg.enableClosingConfirmation(); // Prevents accidental closing
+        const btn = document.getElementById('ad-btn');
+        const status = document.getElementById('status');
 
-        // 2. Initialize Adsgram with YOUR Block ID
-        const AdController = window.Adsgram.init({ blockId: "20572" }); 
+        tg.expand(); 
 
-        // 3. Logic
-        function showAd() {
-            const btn = document.getElementById('ad-btn');
-            const status = document.getElementById('status');
+        // Initialize Adsgram with YOUR Block ID
+        let AdController;
+        try {
+            AdController = window.Adsgram.init({ blockId: "20572" });
+        } catch (e) {
+            status.innerText = "Error: Internet Connection Failed";
+        }
 
-            // Loading UI
+        function runAdLogic() {
+            // UI Loading Effect
             btn.disabled = true;
-            btn.style.opacity = "0.7";
-            btn.innerHTML = "Processing...";
+            btn.innerHTML = "⏳ Loading...";
             status.innerText = "Connecting to Ad Server...";
-            status.style.color = "#FFD700"; // Gold
+            status.style.color = "#FFD700"; // Gold color
+
+            // Verify Environment
+            if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+                // If running in Chrome/Pydroid (Testing Mode)
+                setTimeout(() => {
+                   status.innerText = "⚠️ Please open inside Telegram Bot";
+                   status.style.color = "#FF5252";
+                   resetButton();
+                }, 1000);
+                return;
+            }
 
             // Show Ad
             AdController.show().then((result) => {
-                // SUCCESS
-                status.innerText = "Success! Reward Unlocked.";
+                // ✅ SUCCESS
+                status.innerText = "Success! Gold Sent.";
                 status.style.color = "#4CAF50"; // Green
                 
                 btn.innerHTML = "✅ COLLECTED";
                 btn.style.background = "#4CAF50";
                 btn.style.color = "white";
                 btn.style.boxShadow = "none";
-
-                // Send data to Bot
+                
+                // Send signal to Bot
                 tg.sendData("AD_WATCHED_SUCCESS"); 
                 
-                // Close automatically
+                // Close after 1.5s
                 setTimeout(() => { tg.close(); }, 1500);
 
             }).catch((result) => {
-                // ERROR / SKIP
-                status.innerText = "Video Skipped. Try Again.";
-                status.style.color = "#FF5252"; // Red
+                // ❌ FAILED or SKIPPED
+                console.error(result);
                 
-                // Reset Button
-                btn.disabled = false;
-                btn.style.opacity = "1";
-                btn.innerHTML = "Claim Reward";
+                // Specific error messages for you
+                if (result && result.description === "No ads") {
+                    status.innerText = "No ads available right now. Try later.";
+                } else {
+                    status.innerText = "Video skipped or failed.";
+                }
+                status.style.color = "#FF5252"; // Red
+                resetButton();
             });
+        }
+
+        function resetButton() {
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = "Claim Reward";
+                // Reset to Gold Gradient
+                btn.style.background = "linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%)";
+                btn.style.color = "#00251a";
+            }, 2500);
         }
     </script>
 </body>
