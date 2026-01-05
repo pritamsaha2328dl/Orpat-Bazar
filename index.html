@@ -9,90 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. GLOBAL RESET --- */
+        /* --- 1. PREMIUM ORIGINAL DESIGN --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; }
 
-        /* --- 2. SPLASH SCREEN (OPENING ANIMATION) --- */
-        #splash-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #0f1014; /* Deep Dark Background */
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .splash-logo {
-            width: 80px; height: 80px;
-            border-radius: 20px; margin-bottom: 20px;
-            /* Logo Gradient */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            box-shadow: 0 0 25px rgba(37, 117, 252, 0.6);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 36px; color: white; font-weight: 800;
-        }
-
-        .splash-title {
-            /* Cyan Gradient Text */
-            background: linear-gradient(to right, #00d2ff, #3a7bd5);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-size: 26px; font-weight: 800; letter-spacing: 1px;
-            margin-bottom: 5px; text-transform: uppercase;
-        }
-
-        .splash-sub {
-            color: #6c757d; font-size: 14px; margin-bottom: 40px; letter-spacing: 0.5px;
-        }
-
-        .progress-container {
-            width: 200px; height: 6px;
-            background-color: #1e2126;
-            border-radius: 10px; overflow: hidden; position: relative;
-        }
-
-        .progress-bar {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-            border-radius: 10px;
-            /* 3 Second Animation */
-            animation: loadProgress 3s ease-in-out forwards;
-        }
-
-        .splash-footer {
-            position: absolute; bottom: 30px;
-            color: #4a4a4a; font-size: 12px; font-weight: 600;
-        }
-
-        @keyframes loadProgress {
-            0% { width: 0%; }
-            50% { width: 60%; }
-            100% { width: 100%; }
-        }
-
-        /* --- 3. MAIN APP INTERFACE --- */
         body {
-            /* Main Background: Deep Teal Gradient */
+            /* YOUR ORIGINAL COLOR: Deep Teal Gradient */
             background: radial-gradient(circle at center, #004d40 0%, #00251a 100%);
             color: white;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
+        /* Glass Card */
         .app-container {
             width: 90%; max-width: 380px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); /* Crystal Glass */
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 32px; padding: 40px 24px; text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2); /* Gold Border */
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            opacity: 0; transform: scale(0.9); /* Hidden initially */
+            
+            /* Card Entrance */
+            opacity: 0; transform: scale(0.9);
             animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 3.2s; /* Wait for splash to finish */
         }
 
+        /* Spinning Gear Icon */
         .brand-icon {
             font-size: 50px; margin-bottom: 15px; display: inline-block;
             background: linear-gradient(to bottom, #FFD700, #B8860B);
@@ -103,109 +45,154 @@
         h1 { margin: 0; font-size: 28px; font-weight: 800; color: #FFD700; text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
         p { font-size: 14px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 35px; }
 
-        /* Gold Button */
+        /* --- 2. PROGRESS BAR (REPLACES BUTTON INITIALLY) --- */
+        #loading-area {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .progress-track {
+            width: 100%; height: 8px;
+            background-color: rgba(0, 0, 0, 0.3); /* Dark track */
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%; width: 0%;
+            /* GOLD GRADIENT BAR */
+            background: linear-gradient(90deg, #FFD700, #FDB931, #B8860B);
+            border-radius: 10px;
+            /* 3 Second Animation */
+            animation: fillBar 3s ease-in-out forwards;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .loading-text {
+            font-size: 12px; color: #FFD700; margin-top: 10px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- 3. GOLD BUTTON (HIDDEN INITIALLY) --- */
         .btn-gold {
+            display: none; /* Hidden until bar finishes */
             width: 100%; padding: 18px; border: none; border-radius: 18px; cursor: pointer;
             background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%);
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
             color: #00251a; font-size: 18px; font-weight: 800; text-transform: uppercase;
+            text-decoration: none;
             transition: transform 0.2s, filter 0.2s;
-            text-decoration: none; display: inline-block;
         }
-        .btn-gold:active { transform: scale(0.96); filter: brightness(0.9); }
         
-        /* Loading State for Button */
-        .btn-disabled {
-            opacity: 0.7; pointer-events: none; filter: grayscale(50%);
+        /* Animation for when button appears */
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
         }
+
+        .btn-gold:active { transform: scale(0.96); filter: brightness(0.9); }
+        .btn-disabled { opacity: 0.7; pointer-events: none; filter: grayscale(50%); }
 
         #status { margin-top: 25px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); min-height: 20px; transition: color 0.3s; }
 
+        /* --- ANIMATIONS --- */
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fillBar { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
-    <!-- 🌟 SPLASH SCREEN ANIMATION 🌟 -->
-    <div id="splash-screen">
-        <div class="splash-logo">OB</div> 
-        <div class="splash-title">ORPAT BAZAR</div>
-        <div class="splash-sub">Unlock the Universe of Learning</div>
-        
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-
-        <div class="splash-footer">Powered by MadXAbhi 🚩</div>
-    </div>
-
-    <!-- 📱 MAIN APP CONTENT -->
     <div class="app-container">
         <div class="brand-icon">⚙️</div>
         <h1>Orpat Bazar</h1>
-        <p>Click the button below to<br>verify and claim <b>+10 Gold</b>.</p>
+        <p>Verifying your request...<br>Please wait while we initialize your reward.</p>
         
+        <!-- SECTION 1: LOADING BAR (Visible Initially) -->
+        <div id="loading-area">
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="loading-text">Loading Resources...</div>
+        </div>
+
+        <!-- SECTION 2: BUTTON (Replaces Bar after 3s) -->
         <a id="collect-btn" href="#" class="btn-gold">
-            Initialize...
+            COLLECT NOW
         </a>
 
-        <div id="status">Waiting for link...</div>
+        <div id="status">Connecting securely...</div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
+        const loadingArea = document.getElementById('loading-area');
         const btn = document.getElementById('collect-btn');
         const status = document.getElementById('status');
-        const splash = document.getElementById('splash-screen');
 
-        // --- 1. HANDLE SPLASH SCREEN ---
-        document.addEventListener("DOMContentLoaded", function() {
-            // Wait 3 seconds (syncs with CSS animation)
-            setTimeout(function() {
-                splash.style.opacity = '0'; // Fade out
-                setTimeout(() => {
-                    splash.style.display = 'none'; // Remove from layout
-                }, 500); 
-            }, 3000);
-        });
-
-        // --- 2. GET LINK & SETUP BUTTON ---
+        // --- 1. GET LINK FROM URL ---
         const urlParams = new URLSearchParams(window.location.search);
         const nextLink = urlParams.get('next');
 
-        if (nextLink) {
-            const decodedLink = decodeURIComponent(nextLink);
-            btn.href = decodedLink;
-            btn.innerHTML = "COLLECT NOW 🚀";
-            status.innerText = "Ready to Claim";
-            status.style.color = "#FFD700";
-        } else {
-            btn.innerHTML = "❌ LINK MISSING";
-            btn.removeAttribute("href");
-            btn.onclick = function() { alert("Please open from Telegram Bot"); return false; };
-            status.innerText = "Error: Invalid Access";
-            status.style.color = "#FF5252";
-        }
+        // --- 2. SEQUENCE LOGIC ---
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // Step 1: Wait 3 seconds (Matches CSS Animation)
+            setTimeout(() => {
+                
+                // Step 2: Hide Loading Bar
+                loadingArea.style.display = 'none';
 
-        // --- 3. HANDLE BUTTON CLICK (LOADING STATE) ---
+                // Step 3: Check if Link exists
+                if (nextLink) {
+                    const decodedLink = decodeURIComponent(nextLink);
+                    btn.href = decodedLink;
+                    
+                    // Show Button with Animation
+                    btn.style.display = 'inline-block';
+                    btn.classList.add('fade-in-up');
+                    
+                    status.innerText = "Verification Complete ✅";
+                    status.style.color = "#FFD700"; // Gold
+                } else {
+                    // Error State
+                    status.innerText = "Error: Invalid Link";
+                    status.style.color = "#FF5252"; // Red
+                    
+                    // Show a disabled error button
+                    btn.style.display = 'inline-block';
+                    btn.innerText = "LINK MISSING";
+                    btn.classList.add('btn-disabled');
+                    btn.onclick = function() { alert("Please open from Telegram Bot"); return false; };
+                }
+
+            }, 3000); // 3000ms = 3 Seconds
+        });
+
+        // --- 3. HANDLE BUTTON CLICK ---
         btn.addEventListener('click', function() {
             if(nextLink) {
                 btn.innerHTML = "Please Wait... ⏳";
-                btn.classList.add('btn-disabled'); // Apply disabled style
-                status.innerText = "Redirecting to Ad...";
+                btn.style.opacity = "0.7";
+                btn.style.pointerEvents = "none"; 
+                status.innerText = "Redirecting...";
             }
         });
 
-        // --- 4. 🛠 FIX FOR "BACK" BUTTON (Pageshow Event) ---
-        // This resets the button if the user comes back to the page
+        // --- 4. HANDLE 'BACK' BUTTON (Reset State) ---
         window.addEventListener('pageshow', function(event) {
-            // Force reset text and styles
-            if(nextLink) {
-                btn.innerHTML = "COLLECT NOW 🚀";
-                btn.classList.remove('btn-disabled'); // Remove disabled style
+            // If user comes back, button should be clickable again
+            if(nextLink && btn.style.display !== 'none') {
+                btn.innerHTML = "COLLECT NOW";
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "auto";
                 status.innerText = "Ready to Claim";
             }
         });
