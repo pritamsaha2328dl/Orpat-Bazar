@@ -5,39 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Orpat Bazar Rewards</title>
     
-    <!-- Telegram Script (Kept for styling/expanding) -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- REMOVED Adsgram Script (Not needed anymore) -->
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. PREMIUM DESIGN SETUP (Unchanged) --- */
+        /* --- 1. GLOBAL RESET --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; }
 
+        /* --- 2. SPLASH SCREEN (OPENING ANIMATION) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0f1014; /* Deep Dark Background */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .splash-logo {
+            width: 80px; height: 80px;
+            border-radius: 20px; margin-bottom: 20px;
+            /* Logo Gradient */
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            box-shadow: 0 0 25px rgba(37, 117, 252, 0.6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px; color: white; font-weight: 800;
+        }
+
+        .splash-title {
+            /* Cyan Gradient Text */
+            background: linear-gradient(to right, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 26px; font-weight: 800; letter-spacing: 1px;
+            margin-bottom: 5px; text-transform: uppercase;
+        }
+
+        .splash-sub {
+            color: #6c757d; font-size: 14px; margin-bottom: 40px; letter-spacing: 0.5px;
+        }
+
+        .progress-container {
+            width: 200px; height: 6px;
+            background-color: #1e2126;
+            border-radius: 10px; overflow: hidden; position: relative;
+        }
+
+        .progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            border-radius: 10px;
+            /* 3 Second Animation */
+            animation: loadProgress 3s ease-in-out forwards;
+        }
+
+        .splash-footer {
+            position: absolute; bottom: 30px;
+            color: #4a4a4a; font-size: 12px; font-weight: 600;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        /* --- 3. MAIN APP INTERFACE --- */
         body {
-            /* Orpat Brand Colors: Deep Teal Gradient */
+            /* Main Background: Deep Teal Gradient */
             background: radial-gradient(circle at center, #004d40 0%, #00251a 100%);
             color: white;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* Glass Card */
         .app-container {
             width: 90%; max-width: 380px;
-            background: rgba(255, 255, 255, 0.05); /* Crystal Glass */
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 32px; padding: 40px 24px; text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.2); /* Gold Border */
+            border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            
-            /* Entrance Animation */
-            opacity: 0; transform: scale(0.9);
+            opacity: 0; transform: scale(0.9); /* Hidden initially */
             animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 3.2s; /* Wait for splash to finish */
         }
 
-        /* Spinning Gear Icon */
         .brand-icon {
             font-size: 50px; margin-bottom: 15px; display: inline-block;
             background: linear-gradient(to bottom, #FFD700, #B8860B);
@@ -55,86 +110,105 @@
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
             color: #00251a; font-size: 18px; font-weight: 800; text-transform: uppercase;
             transition: transform 0.2s, filter 0.2s;
-            text-decoration: none; /* In case we use <a> tag later */
-            display: inline-block;
+            text-decoration: none; display: inline-block;
         }
         .btn-gold:active { transform: scale(0.96); filter: brightness(0.9); }
-        .btn-gold:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(100%); }
+        
+        /* Loading State for Button */
+        .btn-disabled {
+            opacity: 0.7; pointer-events: none; filter: grayscale(50%);
+        }
 
-        /* Status Text */
         #status { margin-top: 25px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); min-height: 20px; transition: color 0.3s; }
 
-        /* Animations */
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
+    <!-- 🌟 SPLASH SCREEN ANIMATION 🌟 -->
+    <div id="splash-screen">
+        <div class="splash-logo">OB</div> 
+        <div class="splash-title">ORPAT BAZAR</div>
+        <div class="splash-sub">Unlock the Universe of Learning</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <div class="splash-footer">Powered by MadXAbhi 🚩</div>
+    </div>
+
+    <!-- 📱 MAIN APP CONTENT -->
     <div class="app-container">
         <div class="brand-icon">⚙️</div>
         <h1>Orpat Bazar</h1>
         <p>Click the button below to<br>verify and claim <b>+10 Gold</b>.</p>
         
-        <!-- Button Logic will be handled by JS -->
-        <button id="ad-btn" class="btn-gold">
+        <a id="collect-btn" href="#" class="btn-gold">
             Initialize...
-        </button>
+        </a>
 
         <div id="status">Waiting for link...</div>
     </div>
 
     <script>
-        // --- NEW LOGIC FOR GPLINKS REDIRECTION ---
-        
-        // 1. Initialize Telegram WebApp (for UI expansion)
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // 2. DOM Elements
-        const btn = document.getElementById('ad-btn');
+        const btn = document.getElementById('collect-btn');
         const status = document.getElementById('status');
+        const splash = document.getElementById('splash-screen');
 
-        // 3. Logic to read the URL parameter "?next=..."
-        function initPage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const nextLink = urlParams.get('next');
+        // --- 1. HANDLE SPLASH SCREEN ---
+        document.addEventListener("DOMContentLoaded", function() {
+            // Wait 3 seconds (syncs with CSS animation)
+            setTimeout(function() {
+                splash.style.opacity = '0'; // Fade out
+                setTimeout(() => {
+                    splash.style.display = 'none'; // Remove from layout
+                }, 500); 
+            }, 3000);
+        });
 
-            if (nextLink) {
-                // SUCCESS: We have a link from the bot
-                const decodedLink = decodeURIComponent(nextLink);
-                
-                status.innerText = "Link Ready. Click to Proceed.";
-                status.style.color = "#FFD700"; // Gold
-                
-                btn.innerHTML = "COLLECT NOW 🚀";
-                btn.disabled = false;
-                
-                // Add click event to redirect user
-                btn.onclick = function() {
-                    status.innerText = "Redirecting...";
-                    btn.innerHTML = "Please Wait ⏳";
-                    
-                    // Small delay for UI effect, then redirect
-                    setTimeout(() => {
-                        window.location.href = decodedLink;
-                    }, 500);
-                };
+        // --- 2. GET LINK & SETUP BUTTON ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const nextLink = urlParams.get('next');
 
-            } else {
-                // ERROR: No link found (User opened site directly, not from Bot)
-                console.error("No 'next' parameter found in URL");
-                
-                btn.innerHTML = "❌ LINK MISSING";
-                btn.disabled = true;
-                
-                status.innerText = "Please open this page via Orpat Bot.";
-                status.style.color = "#FF5252"; // Red
-            }
+        if (nextLink) {
+            const decodedLink = decodeURIComponent(nextLink);
+            btn.href = decodedLink;
+            btn.innerHTML = "COLLECT NOW 🚀";
+            status.innerText = "Ready to Claim";
+            status.style.color = "#FFD700";
+        } else {
+            btn.innerHTML = "❌ LINK MISSING";
+            btn.removeAttribute("href");
+            btn.onclick = function() { alert("Please open from Telegram Bot"); return false; };
+            status.innerText = "Error: Invalid Access";
+            status.style.color = "#FF5252";
         }
 
-        // Run logic immediately
-        initPage();
+        // --- 3. HANDLE BUTTON CLICK (LOADING STATE) ---
+        btn.addEventListener('click', function() {
+            if(nextLink) {
+                btn.innerHTML = "Please Wait... ⏳";
+                btn.classList.add('btn-disabled'); // Apply disabled style
+                status.innerText = "Redirecting to Ad...";
+            }
+        });
+
+        // --- 4. 🛠 FIX FOR "BACK" BUTTON (Pageshow Event) ---
+        // This resets the button if the user comes back to the page
+        window.addEventListener('pageshow', function(event) {
+            // Force reset text and styles
+            if(nextLink) {
+                btn.innerHTML = "COLLECT NOW 🚀";
+                btn.classList.remove('btn-disabled'); // Remove disabled style
+                status.innerText = "Ready to Claim";
+            }
+        });
 
     </script>
 </body>
